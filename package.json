@@ -1,0 +1,21 @@
+{
+  "name": "py-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "sketch": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/select": "^1.2.1",
+    "chalk": "^5.2.0",
+    "commander": "^11.0.0",
+    "inquirer": "^9.2.7"
+  },
+  "devDependencies": {},
+  "keywords": []
+}

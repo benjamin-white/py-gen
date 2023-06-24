@@ -1,18 +1,12 @@
 #!/usr/bin/env node
-import inquirer from "inquirer";
+import select from "@inquirer/select";
 import chalk from "chalk";
 import { spawn } from "child_process";
+import { readFile } from "fs/promises";
 
-// fix the npm log level
-// load options from config file
-// remove main inquirere
+const inventory = await readFile(new URL("./inventory.json", import.meta.url));
 
-const sketches = {
-  main: "Main",
-  notMain: "Do Not Choose",
-};
-
-import select from "@inquirer/select";
+const sketches = JSON.parse(inventory);
 
 const answer = await select({
   message: "Select sketch:",
@@ -22,10 +16,11 @@ const answer = await select({
   })),
 });
 
-// const sketchFile = `${answer}.py`;
-// const feedback = `Running sketch: ${chalk.green(
-//   sketches[answer]
-// )} (${sketchFile})`;
+const sketchFile = `${answer}.py`;
+const feedback = `Running sketch: ${chalk.green(
+  sketches[answer]
+)} (${sketchFile})`;
+console.log(feedback);
 
-// console.log(feedback);
-// spawn("python", [sketchFile]);
+const childProcess = spawn(`python ./sketches/${sketchFile}`, { shell: true });
+childProcess.on("exit", () => console.log(chalk.blue("Sketch closed, bye!")));
